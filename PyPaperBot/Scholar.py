@@ -1,9 +1,13 @@
 import time
 import requests
 import functools
-from .HTMLparsers import schoolarParser
-from .Crossref import getPapersInfo
-from .NetInfo import NetInfo
+from HTMLparsers import schoolarParser
+from Crossref import getPapersInfo
+
+
+
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
+SciHub_URL = "https://sci-hub.tw/"   
 
 
 def waithIPchange():
@@ -14,6 +18,7 @@ def waithIPchange():
 
 def ScholarPapersInfo(query, scholar_pages, restrict):
    
+    global HEADERS
     javascript_error = "Sorry, we can't verify that you're not a robot when JavaScript is turned off"
     
     url = "https://scholar.google.com/scholar?hl=en&q="+query+"&as_vis=1&as_sdt=1,5"
@@ -25,7 +30,7 @@ def ScholarPapersInfo(query, scholar_pages, restrict):
     last_blocked = False
     i = 0
     while i < scholar_pages:
-        html = requests.get(url, headers=NetInfo.HEADERS)
+        html = requests.get(url, headers=HEADERS)
         html = html.text
         
         if javascript_error in html and last_blocked==False:
@@ -38,16 +43,32 @@ def ScholarPapersInfo(query, scholar_pages, restrict):
         papers = schoolarParser(html)
         print("\nGoogle Scholar page {} : {} papers found".format((i+1),len(papers)))
         
+        
         if(len(papers)>0):
-            papersInfo = getPapersInfo(papers, url, restrict)
-            info_valids = functools.reduce(lambda a,b : a+1 if b.DOI!=None else a, papersInfo, 0)
-            print("Papers found on Crossref: {}/{}\n".format(info_valids,len(papers)))
-            
-            to_download.append(papersInfo)
+            if (len(papers)>1):
+                input_user = input("Multiple papers found: Continue (y) or be more specific (n)\n")
+                if input_user == 'y':
+                    papersInfo = getPapersInfo(papers, url, restrict)
+                    info_valids = functools.reduce(lambda a,b : a+1 if b.DOI!=None else a, papersInfo, 0)
+                    print("Papers found on Crossref: {}/{}\n".format(info_valids,len(papers)))
+                    to_download.append(papersInfo)
+                else:
+                    return "specify query"
+
+            else:    
+                papersInfo = getPapersInfo(papers, url, restrict)
+                info_valids = functools.reduce(lambda a,b : a+1 if b.DOI!=None else a, papersInfo, 0)
+                print("Papers found on Crossref: {}/{}\n".format(info_valids,len(papers)))
+                        
+                to_download.append(papersInfo)
         else:
             print("Paper not found...")
 
         i += 1
         url += "&start=" + str(10*i)
+
+
+           
         
+
     return [item for sublist in to_download for item in sublist]

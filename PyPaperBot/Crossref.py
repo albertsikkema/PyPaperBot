@@ -1,11 +1,12 @@
 from crossref_commons.iteration import iterate_publications_as_json
 from crossref_commons.retrieval import get_entity
 from crossref_commons.types import EntityType, OutputType
-from .PapersFilters import similarStrings
-from .Paper import Paper
+from PapersFilters import similarStrings
+from Paper import Paper
 import requests
 import time
 import random
+
 
 
 def getBibtex(DOI):
@@ -36,7 +37,6 @@ def getPapersInfoFromDOIs(DOI, restrict):
             
     return paper_found
         
-
 #Get paper information from Crossref and return a list of Paper
 def getPapersInfo(papers, scholar_search_link, restrict):
     papers_return = []
