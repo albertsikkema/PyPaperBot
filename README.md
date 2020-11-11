@@ -1,11 +1,21 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/ferru97)
 
-# PyPaperBot
-PyPaperBot is a Python tool for **downloading scientific papers** using Google Scholar, Crossref, and SciHub.
-The tool tries to download papers from different sources such as PDF provided by Scholar, Scholar related links, and Scihub.
-PyPaerbot is also able to download the **bibtex** of each paper.
+# PyPaperBot_Adapted
+PyPaperBot is a Python tool for **downloading scientific papers** using Google Scholar, Crossref, and SciHub. 
 
-## Features
+Adapted for easier use from the original by:
+
+- cli-driven menu.
+- automatically finding a valid SciHub-server
+- Adding info from latest download to results.csv (instead of replacing results.csv)
+- Adding info from latest download to Bibtex (instead of replacing bibtex)
+- Added preferences which can be stored between uses for download-location and list of SciHub-servers (to save time)
+- 
+
+
+
+Features
+
 - Download papers given a query
 - Download papers given paper's DOIs
 - Download papers given a Google Scholar link
