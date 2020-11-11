@@ -1,7 +1,5 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/ferru97)
-
 # PyPaperBot_Adapted
-PyPaperBot is a Python tool for **downloading scientific papers** using Google Scholar, Crossref, and SciHub.
+This is a fork of PyPaperBot. PPB is a Python tool for **downloading scientific papers** using Google Scholar, Crossref, and SciHub.
 
 Adapted for easier use from the original by:
 
@@ -19,11 +17,7 @@ Features
 - Generate Bibtex of the downloaded paper
 
 ## Installation
-Use `pip` to install from pypi:
-
-```bash
-pip install PyPaperBot
-```
+Clone or download this fork.
 
 ## How to use
 
